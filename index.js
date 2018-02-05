@@ -6,10 +6,11 @@ handleSubmit();
 
 function handleSubmit(){
     $('.js-submit').on('click', function(event){
-        //$('.js-intro').addClass('hidden');
-        console.log(map.center.toJSON().lng);
+      event.preventDefault();
+      $('html, body').animate({ scrollTop: $("#map").offset().top}, 'slow');
         //zomatoRequest(map);
-        eventBriteRequest();
+        //eventBriteRequest();
+        forSquareAPI();
     });
 }
 
@@ -124,23 +125,51 @@ function eventBriteRequest(){
 
 let eventCordinates = [];
 function  getEventBriteCordinates(){
-    eventCordinates = [];
     for(let i = 0; i < eventIDs.length; i++){
      $.getJSON(`https://www.eventbriteapi.com/v3/venues/${eventIDs[i]}/?token=${eventBriteToken}`, function (data){
       let cordinates = {
-        'latitude':data.latitude,
-        'longitude':data.longitude
+        "latitude":data.latitude,
+        "longitude":data.longitude
         }
-      eventCordinates.push(cordinates);
-      })
-     }
-     addCordinatesToEventObject();   
-  } 
-
-function addCordinatesToEventObject(){
-  console.log(eventCordinates);
-  for(let i = 0; i < eventBriteArray.events.length; i++){
-    eventBriteArray.events[i].latitude = eventCordinates[i].latitude;
-    eventBriteArray.events[i].longitude = `${eventCordinates[i].longitude}`;
-    };
+      eventCordinates[eventCordinates.length] = cordinates;
+    })
   }
+     console.log(eventCordinates.length);
+     console.log(eventCordinates);
+     //addCordinatesToEventObject(eventCordinates);   
+} 
+
+function addCordinatesToEventObject(eventCordinates){
+  //for(let i = 0; i < eventBriteArray.events.length; i++){
+    //eventBriteArray.events[i].latitude = eventCordinates[i].latitude;
+    //eventBriteArray.events[i].longitude = `${eventCordinates[i].longitude}`;
+    };
+
+const fourSquare_URL = 'https://api.foursquare.com/v2/venues/search'
+const fourSquareClientID = 'V35QDRVYWDIJAFFIES2SYDH54F0HXJ0MWIN01NI4ALVM1QA0'
+const fourSquareClientSecret = 'EB1YIO1Y3K3JHD20I4TBIQ0MB0WYRDRTELAZSJFVTRGNB1T4' 
+
+function forSquareAPI(){
+  let request ={
+    client_id: fourSquareClientID,
+    client_secret: fourSquareClientSecret,
+    ll: `${map.center.toJSON().lat},${map.center.toJSON().lng}`,
+    query: 'food',
+    v: '20170801',
+    limit: 20
+  }
+
+  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data));
+}
+
+function addFoodMarkers(data){
+  console.log(data);
+  for(let i = 0; i < data.response.venues.length; i++){
+    let latLng =  new google.maps.LatLng(data.response.venues[i].location.lat,data.response.venues[i].location.lng);
+    let marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+      title: `${data.response.venues[i].contact.facebookName}`
+    });
+  }
+}

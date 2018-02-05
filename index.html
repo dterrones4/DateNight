@@ -4,27 +4,30 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <title>Youtube search API</title>
+        <link href="https://fonts.googleapis.com/css?family=Lora|Pacifico" rel="stylesheet">
+        <link href = 'float-grid.css' rel='stylesheet' type='text/css'/>
         <link href="main.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <main role='main'>
-            <h1 class='center'>Date Night</h1>
-
-        <form class='center js-intro'>
-            Location<br>
-            <input type='text' id='address' placeholder='enter an address' ><br>
-            <input type='button' value='submit' class='js-submit'>            
-        </form>
-
-        <div class='description center js-intro'>
-            <p>Welcome to "Date night". Date night will provide you
-                with a list of things to do in your area. The list will
-                include restarauts, live music, local attractions and much more!
-                To get started simply enter your address.
-            </p>
-        </div>
-        <div id="map" class=''>     
-        </div>
+        <header class='headerSection'>
+            <div class='row'>
+                <h1 class='center'>Date Night</h1>
+                <div class='description center js-intro'>
+                    <p>Welcome to "Date night". Date night will provide you
+                        with a list of things to do in your area. This list will
+                        include restaurants, live music, local attractions and much more!
+                        To get started simply enter your address below.
+                    </p>
+                </div>
+                <form class='center js-intro description row'>
+                    <input type='text' id='address' placeholder='enter an address'class='input' ><br>
+                    <input type='submit' value='submit' class='js-submit button'>            
+                </form>
+            </div>
+        </header>
+                <div id="map" class=''>     
+                </div>
         </main>
         <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"

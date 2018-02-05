@@ -16,6 +16,7 @@
     height:100%;
     overflow:scroll;
     width:100%;
+    display:inline-block;
 }
 
 html, body, main{
@@ -23,4 +24,67 @@ html, body, main{
     width:100%;
     margin: 0;
     padding: 0; 
+}
+
+.headerSection{
+    height:100%;
+    color:#EDE9E0; 
+
+    background: 
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, .7),
+      rgba(0, 0, 0, .3)
+    ),
+
+    url('header.jpg');
+    background-size: cover;
+    background-position: 15% 0%;
+    background-attachment: scroll;
+    padding: 20px 0;
+    box-shadow: 0 0 10px black;
+}
+
+h1{
+    font-family: 'Pacifico', cursive;
+    font-size: 36px;
+    
+}
+
+.description{
+    font-family: 'Lora', serif;
+    font-size: 20px;
+}
+
+.input{
+    border: none;
+    border-bottom: 3px solid ghostwhite;
+    border-radius: 0px;
+    padding: 8px 0;
+    color: #EDE9E0;
+    -webkit-font-smoothing: antialiased;
+    font-size: 30px;
+    background: none;
+    width: 690px;
+  }
+
+.input:focus {
+    outline: none;
+}
+
+.button {
+    font-family: 'Lora', serif;
+    border: 3px solid ghostwhite;
+    padding: 8px 13px;
+    margin-top: 15px; 
+    color: ghostwhite;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: color 0.25s linear;
+    text-shadow: 0 0 3px #555555;
+    position: relative;
+    left: -3px;
+    border-radius: 0;
 }
