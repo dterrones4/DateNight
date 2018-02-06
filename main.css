@@ -15,7 +15,6 @@
 #map{
     height:100%;
     overflow:scroll;
-    width:75%;
     display:inline-block;
 }
 
@@ -114,5 +113,9 @@ h1{
     padding: none;
     float: left; 
 }
-
+.listItem{
+    border:2px solid black;
+    border-radius: 3px;
+    background-color: lightblue;
+    width:100%; 
 }

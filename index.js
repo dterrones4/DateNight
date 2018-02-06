@@ -18,8 +18,8 @@ function handleSubmit(){
 function initAutocomplete(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat:33.1880740, lng:-117.2904340},
-        zoom: 15,
-        zoomControl: true,
+        zoom: 7,
+        zoomControl: false,
         zoomControlOptions: {
           position: google.maps.ControlPosition.LEFT_CENTER
         },
@@ -203,7 +203,7 @@ function addFoodMarkers(data, image){
   const venue = data.response.venues;
   let icon = {
     url: image,
-    scaledSize: new google.maps.Size(50, 50),
+    scaledSize: new google.maps.Size(40, 40),
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(0, 0) // anchor
   };
@@ -223,7 +223,11 @@ function addFoodMarkers(data, image){
     '</ul>'+
     '</div>';
 
-    $('.places').append(contentString);
+    $('.places').append('<div class="listItem">'+
+    `<h3><a href="${venue[i].url}" target="_blank">${venue[i].name}</a></h3>`+
+    `<p>Phone:${venue[i].contact.formattedPhone}<p>`+
+    `<p>Address: ${venue[i].location.address}, ${venue[i].location.city}</p>`+
+    '</div>');
 
     let infowindow = new google.maps.InfoWindow({
       content:contentString
