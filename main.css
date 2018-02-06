@@ -15,7 +15,7 @@
 #map{
     height:100%;
     overflow:scroll;
-    width:100%;
+    width:75%;
     display:inline-block;
 }
 
@@ -87,4 +87,32 @@ h1{
     position: relative;
     left: -3px;
     border-radius: 0;
+}
+
+.placesList{
+    border:3px solid grey;
+    border-radius: 3px;
+    height: 100%;
+    overflow:auto;
+}
+
+.key{
+    height: 25%;
+    padding: 0;
+}
+
+.icon{
+    display: inline-block;
+    width: 33.33%;
+    padding: none;
+    float: left; 
+}
+
+.keyMeaning{
+    display: inline-block;
+    width: 33.33%;
+    padding: none;
+    float: left; 
+}
+
 }

@@ -3,7 +3,6 @@ const zomato_search_URL= 'https://developers.zomato.com/api/v2.1/search';
 
 handleSubmit();
 
-
 function handleSubmit(){
     $('.js-submit').on('click', function(event){
       event.preventDefault();
@@ -163,7 +162,7 @@ function fourSquareAPI(){
     limit: 10
   }
 
-  let image = 'http://dixiecanyon.com/wp-content/uploads/2017/08/breakfast_delicious_dinner_eat_food_fork_fun_holiday_knife_plate-512.png'
+  let image = 'https://cdn4.iconfinder.com/data/icons/food-3-7/65/136-512.png'
   $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
 }
 
@@ -223,6 +222,8 @@ function addFoodMarkers(data, image){
     `<li>Address: ${venue[i].location.address}, ${venue[i].location.city}</li>`
     '</ul>'+
     '</div>';
+
+    $('.places').append(contentString);
 
     let infowindow = new google.maps.InfoWindow({
       content:contentString
