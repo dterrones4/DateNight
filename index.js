@@ -154,8 +154,10 @@ function forSquareAPI(){
     client_id: fourSquareClientID,
     client_secret: fourSquareClientSecret,
     ll: `${map.center.toJSON().lat},${map.center.toJSON().lng}`,
-    query: 'food',
-    v: '20170801',
+    categoryId: '4d4b7105d754a06374d81259',
+    //query: 'food',
+    v: '20180101',
+    radius:2000,
     limit: 20
   }
 
@@ -164,12 +166,36 @@ function forSquareAPI(){
 
 function addFoodMarkers(data){
   console.log(data);
-  for(let i = 0; i < data.response.venues.length; i++){
-    let latLng =  new google.maps.LatLng(data.response.venues[i].location.lat,data.response.venues[i].location.lng);
+  const venue = data.response.venues;
+  let icon = {
+    url: 'http://dixiecanyon.com/wp-content/uploads/2017/08/breakfast_delicious_dinner_eat_food_fork_fun_holiday_knife_plate-512.png',
+    scaledSize: new google.maps.Size(50, 50),
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+  };
+
+  for(let i = 0; i < venue.length; i++){
+    let latLng =  new google.maps.LatLng(venue[i].location.lat,venue[i].location.lng);
     let marker = new google.maps.Marker({
       position: latLng,
       map: map,
-      title: `${data.response.venues[i].contact.facebookName}`
+      title: `${venue[i].contact.facebookName}`,
+      icon: icon
     });
+
+    let contentString ='<div id="content">'+
+    `<h3><a href="${venue[i].url}" target="_blank">${venue[i].name}</a></h3>`+
+    `<ul><li>Phone:${venue[i].contact.formattedPhone}</li>`+
+    `<li>Address: ${venue[i].location.address}, ${venue[i].location.city}</li>`
+    '</ul>'+
+    '</div>';
+
+    let infowindow = new google.maps.InfoWindow({
+      content:contentString
+    })
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    })
   }
 }
