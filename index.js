@@ -10,7 +10,9 @@ function handleSubmit(){
       $('html, body').animate({ scrollTop: $("#map").offset().top}, 'slow');
         //zomatoRequest(map);
         //eventBriteRequest();
-        forSquareAPI();
+        fourSquareAPI();
+        fourSquareActivities();
+        fourSquareNightlife();
     });
 }
 
@@ -149,26 +151,59 @@ const fourSquare_URL = 'https://api.foursquare.com/v2/venues/search'
 const fourSquareClientID = 'V35QDRVYWDIJAFFIES2SYDH54F0HXJ0MWIN01NI4ALVM1QA0'
 const fourSquareClientSecret = 'EB1YIO1Y3K3JHD20I4TBIQ0MB0WYRDRTELAZSJFVTRGNB1T4' 
 
-function forSquareAPI(){
+function fourSquareAPI(){
   let request ={
     client_id: fourSquareClientID,
     client_secret: fourSquareClientSecret,
+    intent: 'browse',
     ll: `${map.center.toJSON().lat},${map.center.toJSON().lng}`,
-    categoryId: '4d4b7105d754a06374d81259',
-    //query: 'food',
+    categoryId: '4d4b7105d754a06374d81259', //catgoryID is for 'food'
     v: '20180101',
-    radius:2000,
-    limit: 20
+    radius:10000,
+    limit: 10
   }
 
-  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data));
+  let image = 'http://dixiecanyon.com/wp-content/uploads/2017/08/breakfast_delicious_dinner_eat_food_fork_fun_holiday_knife_plate-512.png'
+  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
 }
 
-function addFoodMarkers(data){
+function fourSquareActivities(){
+  let request ={
+    client_id: fourSquareClientID,
+    client_secret: fourSquareClientSecret,
+    intent: 'browse',
+    ll: `${map.center.toJSON().lat},${map.center.toJSON().lng}`,
+    categoryId: '4d4b7104d754a06370d81259', //catgoryID is for 'arts & enertainment'
+    v: '20180101',
+    radius:10000,
+    limit: 10
+  }
+
+  let image = 'http://funthingsapp.com/wp-content/uploads/2013/11/funthings-icon-transparent.png'
+  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
+}
+
+function fourSquareNightlife(){
+  let request ={
+    client_id: fourSquareClientID,
+    client_secret: fourSquareClientSecret,
+    intent: 'browse',
+    ll: `${map.center.toJSON().lat},${map.center.toJSON().lng}`,
+    categoryId: '4d4b7105d754a06376d81259', //catgoryID is for 'nightlife Spot'
+    v: '20180101',
+    radius:10000,
+    limit: 10
+  }
+
+  let image = 'https://cdn2.iconfinder.com/data/icons/camping-filled-pt-2/100/46_-_coctail_martini_party_nightlife_glass_wine-512.png'
+  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
+}
+
+function addFoodMarkers(data, image){
   console.log(data);
   const venue = data.response.venues;
   let icon = {
-    url: 'http://dixiecanyon.com/wp-content/uploads/2017/08/breakfast_delicious_dinner_eat_food_fork_fun_holiday_knife_plate-512.png',
+    url: image,
     scaledSize: new google.maps.Size(50, 50),
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(0, 0) // anchor
@@ -179,7 +214,6 @@ function addFoodMarkers(data){
     let marker = new google.maps.Marker({
       position: latLng,
       map: map,
-      title: `${venue[i].contact.facebookName}`,
       icon: icon
     });
 
