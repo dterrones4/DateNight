@@ -7,18 +7,19 @@ function handleSubmit(){
     $('.js-submit').on('click', function(event){
       event.preventDefault();
       $('html, body').animate({ scrollTop: $("#map").offset().top}, 'slow');
-        //zomatoRequest(map);
         //eventBriteRequest();
         fourSquareAPI();
         fourSquareActivities();
         fourSquareNightlife();
+        handleClickOnList();
+        $('.places').empty();
     });
 }
 
 function initAutocomplete(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat:33.1880740, lng:-117.2904340},
-        zoom: 7,
+        zoom: 15,
         zoomControl: false,
         zoomControlOptions: {
           position: google.maps.ControlPosition.LEFT_CENTER
@@ -81,20 +82,6 @@ function initAutocomplete(){
     map.fitBounds(bounds);
   });
 }
-
-
-
-function zomatoRequest(map){
-    let request = {
-        'radius':1000,
-        'category':'2',
-        'lat':map.center.toJSON().lat,
-        'lon':map.center.toJSON().lng,
-        'user-key':zomatoAPI
-    }
-    $.getJSON(zomato_search_URL, request).done(data => console.log(data));
-    }
-
 
 const eventBriteToken = 'F4AWWCWFMVMH3FBLRKAB';
 const eventBrite_URL = 'https://www.eventbriteapi.com/v3/events/search/'
@@ -163,7 +150,7 @@ function fourSquareAPI(){
   }
 
   let image = 'https://cdn4.iconfinder.com/data/icons/food-3-7/65/136-512.png'
-  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
+  $.getJSON(fourSquare_URL, request).done(data => addMarkers(data, image));
 }
 
 function fourSquareActivities(){
@@ -179,7 +166,7 @@ function fourSquareActivities(){
   }
 
   let image = 'http://funthingsapp.com/wp-content/uploads/2013/11/funthings-icon-transparent.png'
-  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
+  $.getJSON(fourSquare_URL, request).done(data => addMarkers(data, image));
 }
 
 function fourSquareNightlife(){
@@ -195,10 +182,12 @@ function fourSquareNightlife(){
   }
 
   let image = 'https://cdn2.iconfinder.com/data/icons/camping-filled-pt-2/100/46_-_coctail_martini_party_nightlife_glass_wine-512.png'
-  $.getJSON(fourSquare_URL, request).done(data => addFoodMarkers(data, image));
+  $.getJSON(fourSquare_URL, request).done(data => addMarkers(data, image));
 }
 
-function addFoodMarkers(data, image){
+let markers = [];
+
+function addMarkers(data, image){
   console.log(data);
   const venue = data.response.venues;
   let icon = {
@@ -209,32 +198,53 @@ function addFoodMarkers(data, image){
   };
 
   for(let i = 0; i < venue.length; i++){
-    let latLng =  new google.maps.LatLng(venue[i].location.lat,venue[i].location.lng);
-    let marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-      icon: icon
-    });
 
     let contentString ='<div id="content">'+
     `<h3><a href="${venue[i].url}" target="_blank">${venue[i].name}</a></h3>`+
-    `<ul><li>Phone:${venue[i].contact.formattedPhone}</li>`+
+    `<ul><li>Phone: ${venue[i].contact.formattedPhone}</li>`+
     `<li>Address: ${venue[i].location.address}, ${venue[i].location.city}</li>`
     '</ul>'+
     '</div>';
 
-    $('.places').append('<div class="listItem">'+
+    let infowindow = new google.maps.InfoWindow({
+      content:contentString
+    });
+
+    let latLng =  new google.maps.LatLng(venue[i].location.lat,venue[i].location.lng);
+    let marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+      icon: icon,
+      infowindow: infowindow
+    });
+    
+    markers.push(marker);
+
+    $('.places').append(`<div class="listItem" data-lat="${venue[i].location.lat}" data-lng="${venue[i].location.lng}">`+
     `<h3><a href="${venue[i].url}" target="_blank">${venue[i].name}</a></h3>`+
-    `<p>Phone:${venue[i].contact.formattedPhone}<p>`+
+    `<p>Phone: ${venue[i].contact.formattedPhone}<p>`+
     `<p>Address: ${venue[i].location.address}, ${venue[i].location.city}</p>`+
     '</div>');
 
-    let infowindow = new google.maps.InfoWindow({
-      content:contentString
-    })
-
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
+    google.maps.event.addListener(marker, 'click', function() {
+      hideAllInfoWindows(map);
+      this.infowindow.open(map, this);
     })
   }
+}
+
+function hideAllInfoWindows(map){
+  markers.forEach(function(marker) {
+    marker.infowindow.close(map, marker);
+  });
+}
+
+function handleClickOnList(){
+  
+	$('.places').on('click', '.listItem', function(){
+		var thisLat = $(this).data('lat');
+		var thisLng = $(this).data('lng'); 
+		map.setZoom(17);
+		map.panTo(new google.maps.LatLng(thisLat, thisLng));
+	});
 }
