@@ -1,5 +1,5 @@
 *{
-    box-sizing:border-box
+    box-sizing:border-box;
 }
 
 .center{
@@ -16,13 +16,15 @@
     height:100%;
     overflow:scroll;
     display:inline-block;
+    border:3px solid grey;
 }
 
 html, body, main{
     height:100%;
     width:100%;
-    margin: 0;
-    padding: 0; 
+    margin: 5px;
+    padding: 5px; 
+    background: lightgrey; 
 }
 
 .headerSection{
@@ -64,7 +66,7 @@ h1{
     -webkit-font-smoothing: antialiased;
     font-size: 30px;
     background: none;
-    width: 690px;
+    width: auto;
   }
 
 .input:focus {
@@ -92,31 +94,55 @@ h1{
     border:3px solid grey;
     border-radius: 3px;
     height: 100%;
-    overflow:auto;
     display:inline-block; 
+    padding: 0px;
 }
 
 .key{
-    height: 25%;
-    padding: 0;
+    height: 27%;
+    border-bottom: 2px solid black;
+    background:lightblue; 
+}
+
+.keyItem{
+    width: 33.3%;
+    display:inline-block;
+    border: 5px black;
+    float:left;
+    max-height: 100%;
+    max-width: 33.3%;
 }
 
 .icon{
-    display: inline-block;
-    width: 33.33%;
-    padding: none;
-    float: left; 
+    max-width: 100%;
+    max-height: 80%;
 }
 
 .keyMeaning{
-    display: inline-block;
-    width: 33.33%;
-    padding: none;
-    float: left; 
+
 }
+
 .listItem{
     border:2px solid black;
     border-radius: 3px;
     background-color: lightblue;
     width:100%; 
+}
+
+.transition{
+    height: 100px;
+    min-width: 100%;
+    border-radius: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #000000;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.footer{
+    height: 20px;
+    background-color: rgb(170, 167, 179);
+    bottom:0;
 }

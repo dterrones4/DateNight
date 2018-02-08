@@ -26,24 +26,28 @@
                 </form>
             </div>
         </header>
-                <div class='placesList col-4'>
-                    <div class='key'>
-                        <div class='keyImages'>
-                            <img class='icon' src ='https://cdn4.iconfinder.com/data/icons/food-3-7/65/136-512.png'>
-                            <img class='icon' src ='http://funthingsapp.com/wp-content/uploads/2013/11/funthings-icon-transparent.png'>
-                            <img class='icon' src ='https://cdn2.iconfinder.com/data/icons/camping-filled-pt-2/100/46_-_coctail_martini_party_nightlife_glass_wine-512.png'>
-                        </div>
-                        <div>
-                            <p class='keyMeaning center'>Food</p>
-                            <p class='keyMeaning center'>Activities</p>
-                            <p class='keyMeaning center'>Nightlife</p>
-                        </div>   
+            <div class='transition row'>
+            </div>
+            <div id="map" class='col-8'></div>    
+            <div class='placesList col-4'>
+                <div class='key'>
+                    <div class='keyItem'>
+                        <img class='icon center' alt='food icon' src ='https://cdn4.iconfinder.com/data/icons/food-3-7/65/136-512.png'>
+                        <p class='keyMeaning center'>Food</p>
                     </div>
-                    <div class='places'>
+                    <div class='keyItem'>
+                        <img class='icon center' alt='activities icon' src ='http://funthingsapp.com/wp-content/uploads/2013/11/funthings-icon-transparent.png'>
+                        <p class='keyMeaning center'>Activities</p>
+                    </div>
+                    <div class='keyItem'>                           
+                        <img class='icon center' alt='nightlife icon' src ='https://cdn2.iconfinder.com/data/icons/camping-filled-pt-2/100/46_-_coctail_martini_party_nightlife_glass_wine-512.png'>
+                        <p class='keyMeaning center'>Nightlife</p>
                     </div>
                 </div>
-                <div id="map" class='col-8'>     
+                <div class='places'>
                 </div>
+            </div>
+        <footer class='footer'></footer>         
         </main>
         <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -52,5 +56,5 @@
       <script src="index.js"></script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi1dIq_wh1RdGYlptBtV8ef3w70O_RI-M&libraries=places&callback=initAutocomplete"
          async defer></script>
-    </body>  
+    </body>
 </html>

@@ -1,6 +1,3 @@
-const zomatoAPI = 'fa1f2b301e470e8aae56848a3f30d51b';
-const zomato_search_URL= 'https://developers.zomato.com/api/v2.1/search';
-
 handleSubmit();
 
 function handleSubmit(){
@@ -8,7 +5,7 @@ function handleSubmit(){
       event.preventDefault();
       $('html, body').animate({ scrollTop: $("#map").offset().top}, 'slow');
         //eventBriteRequest();
-        fourSquareAPI();
+        fourSquareFood();
         fourSquareActivities();
         fourSquareNightlife();
         handleClickOnList();
@@ -20,7 +17,7 @@ function initAutocomplete(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat:33.1880740, lng:-117.2904340},
         zoom: 15,
-        zoomControl: false,
+        zoomControl: true,
         zoomControlOptions: {
           position: google.maps.ControlPosition.LEFT_CENTER
         },
@@ -137,7 +134,7 @@ const fourSquare_URL = 'https://api.foursquare.com/v2/venues/search'
 const fourSquareClientID = 'V35QDRVYWDIJAFFIES2SYDH54F0HXJ0MWIN01NI4ALVM1QA0'
 const fourSquareClientSecret = 'EB1YIO1Y3K3JHD20I4TBIQ0MB0WYRDRTELAZSJFVTRGNB1T4' 
 
-function fourSquareAPI(){
+function fourSquareFood(){
   let request ={
     client_id: fourSquareClientID,
     client_secret: fourSquareClientSecret,
@@ -239,8 +236,7 @@ function hideAllInfoWindows(map){
   });
 }
 
-function handleClickOnList(){
-  
+function handleClickOnList(){ 
 	$('.places').on('click', '.listItem', function(){
 		var thisLat = $(this).data('lat');
 		var thisLng = $(this).data('lng'); 
