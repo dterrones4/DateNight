@@ -109,16 +109,24 @@ h1{
     width: 33.3%;
     display:inline-block;
     float:left;
-    max-height: 150px; 
+    height: 150px;
+    border:2px black solid; 
 }
 
 .icon{
-    width:100%;
-    max-height: 100%;
+    width:auto;
+    max-width: 100%;
+    max-height: 75%;
+    display:block;
+    margin-left:auto;
+    margin-right: auto;
 }
 
 .keyMeaning{
     color:rgb(255, 255, 255);
+    max-height: 20%;
+    position: static;
+    width: 100%;
 }
 
 .listItem{
