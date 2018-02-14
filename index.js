@@ -3,7 +3,6 @@ handleSubmit();
 function handleSubmit(){
     $('.js-submit').on('click', function(event){
       event.preventDefault();
-      //$('main').removeClass('hidden');
       $('html, body').animate({ scrollTop: $("#map").offset().top}, 'slow');
         fourSquareFood();
         fourSquareActivities();

@@ -8,10 +8,6 @@
     text-align:center
 }
 
-.hidden{
-    display:none;
-}
-
 #map{
     height:100%;
     overflow:scroll;
