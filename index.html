@@ -9,16 +9,15 @@
         <link href="main.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <main role='main'>
-        <header class='headerSection'>
+        <header role ='header' class='headerSection'>
             <div class='row'>
                 <h1 class='center'>Date Night</h1>
                 <div class='description center js-intro'>
                     <p>Welcome to "Date night". Date night will provide you
-                        with a list of things to do in your area. This list will
-                        include restaurants, live music, local attractions and much more!
-                        To get started simply enter your address below.
-                    </p>
+                        with a list of things to do in your area. This list 
+                        will include restaurants, live music, local attractions 
+                        and much more! To get started simply enter your address below.
+                    </p>                        
                 </div>
                 <form class='center js-intro description row'>
                     <input type='text' id='address' placeholder='enter an address'class='input' ><br>
@@ -26,6 +25,7 @@
                 </form>
             </div>
         </header>
+        <main role='main' class=''>
             <div class='transition row'>
             </div>
             <div id="map" class='col-8'></div>    
@@ -36,7 +36,7 @@
                         <p class='keyMeaning center'>Food</p>
                     </div>
                     <div class='keyItem'>
-                        <img class='icon center' alt='activities icon' src ='http://funthingsapp.com/wp-content/uploads/2013/11/funthings-icon-transparent.png'>
+                        <img class='icon center' alt='activities icon' src ='https://mitchellinstitute.org/wp-content/themes/mitchell/library/images/Mitchell-Icons_Orange_News-Events.svg'>
                         <p class='keyMeaning center'>Activities</p>
                     </div>
                     <div class='keyItem'>                           
@@ -44,17 +44,17 @@
                         <p class='keyMeaning center'>Nightlife</p>
                     </div>
                 </div>
-                <div class='places'>
+                <div class='places aria-live="polite"'>
                 </div>
-            </div>
-        <footer class='footer'>Created By Daniel</footer>         
+            </div>         
         </main>
+        <footer class='footer'>Created by Daniel Terrones</footer>
         <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
       <script src="index.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi1dIq_wh1RdGYlptBtV8ef3w70O_RI-M&libraries=places&callback=initAutocomplete"
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi1dIq_wh1RdGYlptBtV8ef3w70O_RI-M&libraries=places&callback=initMap"
          async defer></script>
     </body>
 </html>

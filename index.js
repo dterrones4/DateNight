@@ -3,8 +3,8 @@ handleSubmit();
 function handleSubmit(){
     $('.js-submit').on('click', function(event){
       event.preventDefault();
+      //$('main').removeClass('hidden');
       $('html, body').animate({ scrollTop: $("#map").offset().top}, 'slow');
-        //eventBriteRequest();
         fourSquareFood();
         fourSquareActivities();
         fourSquareNightlife();
@@ -13,7 +13,7 @@ function handleSubmit(){
     });
 }
 
-function initAutocomplete(){
+function initMap(){
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat:33.1880740, lng:-117.2904340},
         zoom: 15,
@@ -25,7 +25,8 @@ function initAutocomplete(){
 
     let input = document.getElementById('address');
     let searchBox = new google.maps.places.SearchBox(input);
-    
+
+    //Offer search results based on maps current location.
     map.addListener('bounds_changed', function() {
         searchBox.setBounds(map.getBounds());
       });
@@ -80,56 +81,6 @@ function initAutocomplete(){
   });
 }
 
-const eventBriteToken = 'F4AWWCWFMVMH3FBLRKAB';
-const eventBrite_URL = 'https://www.eventbriteapi.com/v3/events/search/'
-const eventBriteVenue_URL = 'https://www.eventbriteapi.com/v3/venues/:id/'
-
-
-let eventBriteArray = [];
-function eventBriteRequest(){
-  let request = {
-    'location.within':'50mi',  
-    'location.latitude':`${map.center.toJSON().lat}`,
-    'location.longitude':`${map.center.toJSON().lng}`,
-    'start_date.keyword':'today',
-    'token':eventBriteToken
-    }
-    $.getJSON(eventBrite_URL, request,).done(data => createEventIdObject(data));
-  }
-
-  let eventIDs = [];
-  function createEventIdObject(data){
-    eventBriteArray = [];
-    eventIDs = [];
-    for(let i = 0; i < data.pagination.page_size -1; i++){
-      eventIDs.push(`${data.events[i].venue_id}`);
-    }
-    eventBriteArray = data;
-    getEventBriteCordinates();
-  }
-
-let eventCordinates = [];
-function  getEventBriteCordinates(){
-    for(let i = 0; i < eventIDs.length; i++){
-     $.getJSON(`https://www.eventbriteapi.com/v3/venues/${eventIDs[i]}/?token=${eventBriteToken}`, function (data){
-      let cordinates = {
-        "latitude":data.latitude,
-        "longitude":data.longitude
-        }
-      eventCordinates[eventCordinates.length] = cordinates;
-    })
-  }
-     console.log(eventCordinates.length);
-     console.log(eventCordinates);
-     //addCordinatesToEventObject(eventCordinates);   
-} 
-
-function addCordinatesToEventObject(eventCordinates){
-  //for(let i = 0; i < eventBriteArray.events.length; i++){
-    //eventBriteArray.events[i].latitude = eventCordinates[i].latitude;
-    //eventBriteArray.events[i].longitude = `${eventCordinates[i].longitude}`;
-    };
-
 const fourSquare_URL = 'https://api.foursquare.com/v2/venues/search'
 const fourSquareClientID = 'V35QDRVYWDIJAFFIES2SYDH54F0HXJ0MWIN01NI4ALVM1QA0'
 const fourSquareClientSecret = 'EB1YIO1Y3K3JHD20I4TBIQ0MB0WYRDRTELAZSJFVTRGNB1T4' 
@@ -162,7 +113,7 @@ function fourSquareActivities(){
     limit: 10
   }
 
-  let image = 'http://funthingsapp.com/wp-content/uploads/2013/11/funthings-icon-transparent.png'
+  let image = 'https://mitchellinstitute.org/wp-content/themes/mitchell/library/images/Mitchell-Icons_Orange_News-Events.svg'
   $.getJSON(fourSquare_URL, request).done(data => addMarkers(data, image));
 }
 
@@ -185,7 +136,6 @@ function fourSquareNightlife(){
 let markers = [];
 
 function addMarkers(data, image){
-  console.log(data);
   const venue = data.response.venues;
   let icon = {
     url: image,
@@ -217,7 +167,7 @@ function addMarkers(data, image){
     
     markers.push(marker);
 
-    $('.places').append(`<div class="listItem" data-lat="${venue[i].location.lat}" data-lng="${venue[i].location.lng}">`+
+    $('.places').append(`<div class="listItem" aria-live="polite" data-lat="${venue[i].location.lat}" data-lng="${venue[i].location.lng}" data-position="${[i]}">`+
     `<h3><a href="${venue[i].url}" target="_blank">${venue[i].name}</a></h3>`+
     `<p>Phone: ${venue[i].contact.formattedPhone}<p>`+
     `<p>Address: ${venue[i].location.address}, ${venue[i].location.city}</p>`+
@@ -239,8 +189,10 @@ function hideAllInfoWindows(map){
 function handleClickOnList(){ 
 	$('.places').on('click', '.listItem', function(){
 		var thisLat = $(this).data('lat');
-		var thisLng = $(this).data('lng'); 
+    var thisLng = $(this).data('lng');
+    let position = $(this).data('position');
 		map.setZoom(17);
-		map.panTo(new google.maps.LatLng(thisLat, thisLng));
+    map.panTo(new google.maps.LatLng(thisLat, thisLng));
+    markers[position].infowindow.open(map, markers[position]);
 	});
 }
